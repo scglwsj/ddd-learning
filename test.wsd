@@ -1,0 +1,38 @@
+@startuml
+
+interface ITransportable{
+    void transport()
+}
+
+interface IDrivable{
+    - DriveLicense license
+    void drive()
+}
+
+class Car{
+    - IDrivable driver
+}
+
+class DriveLicense{
+    - String type
+    - String ID
+}
+
+class Bus{
+    + Boolean driverCheck()
+}
+
+class Bike
+class Driver
+class BusDriver
+
+ITransportable <|.. Car
+ITransportable <|.. Bike
+ITransportable <|.. Bus
+IDrivable <.down. Car
+IDrivable <.down. Bus
+DriveLicense <.right. IDrivable
+IDrivable <|-- Driver
+IDrivable <|-- BusDriver
+
+@enduml
