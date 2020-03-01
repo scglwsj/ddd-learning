@@ -7,7 +7,7 @@ export abstract class ValueObject<T> {
         return `${this.value}`
     }
 
-    public equals(other: ValueObject<any>) {
+    public equals(other: any) {
         return other.constructor.name === this.constructor.name && other.value === this.value
     }
 }

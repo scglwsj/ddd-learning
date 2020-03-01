@@ -6,19 +6,16 @@ import {ValueObject} from './valueObject'
 import {v4 as uuid} from 'uuid'
 
 export class ParkingLot {
-    private _id: ParkingLotID
+    public readonly id: ParkingLotID
     private capacity: number
     private parkedCars: Map<Ticket, Car>
 
     constructor(totalPosition: number) {
-        this._id = new ParkingLotID(uuid())
+        this.id = new ParkingLotID(uuid())
         this.capacity = totalPosition
         this.parkedCars = new Map<Ticket, Car>()
     }
 
-    public get id() {
-        return this._id
-    }
 
     public park(car: Car) {
         if (this.capacity <= 0) {
