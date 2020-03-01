@@ -22,7 +22,7 @@ export class ParkingLot {
             throw new Error('capacity is not enough.')
         }
 
-        const ticket = new Ticket(car.plant, this._id)
+        const ticket = new Ticket(car.plant, this.id)
         this.parkedCars.set(ticket, car)
         this.capacity--
         return ticket
@@ -34,7 +34,7 @@ export class ParkingLot {
         }
 
         const car = this.parkedCars.get(ticket)
-        ticket.invalid()
+        ticket.invalidate()
         this.parkedCars.delete(ticket)
         this.capacity++
         return car

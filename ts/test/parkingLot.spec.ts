@@ -24,7 +24,7 @@ describe('parking lot test', () => {
         expect(takeCar).toBe(car)
     })
 
-    it('should throw error when given too much cars', () => {
+    it('should throw an error when given too many cars', () => {
         const car1 = new Car('川A 11111')
         const car2 = new Car('川A 22222')
         const car3 = new Car('川A 33333')
@@ -34,7 +34,7 @@ describe('parking lot test', () => {
         expect(() => lot.park(car3)).toThrowError()
     })
 
-    it('should throw error when given an invalid ticket', () => {
+    it('should throw an error when given an invalid ticket', () => {
         const car = new Car('川A 1B2C3')
         const ticket = lot.park(car)
         lot.take(ticket)

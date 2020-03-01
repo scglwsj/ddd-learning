@@ -2,9 +2,9 @@
 
 import {ValueObject} from './valueObject'
 
-export class Car extends ValueObject<Plate> {
+export class Car extends ValueObject<PlateNumber> {
     public constructor(plant: String) {
-        super(new Plate(plant))
+        super(new PlateNumber(plant))
     }
 
     public get plant() {
@@ -12,4 +12,4 @@ export class Car extends ValueObject<Plate> {
     }
 }
 
-export class Plate extends ValueObject<String> {}
+export class PlateNumber extends ValueObject<String> {}
