@@ -4,9 +4,9 @@ learn DDD by parking in TypeScript
 
 ## Environments
 
-[Node.js](https://nodejs.org/en/) `v13.9.0`
+[Node.js](https://nodejs.org/en/) `13.9.0`
 
-[TypeScript](https://www.typescriptlang.org/) `Version 3.8.2`
+[TypeScript](https://www.typescriptlang.org/) `3.8.2`
 
 [npm](https://www.npmjs.com/) `6.14.1`
 
