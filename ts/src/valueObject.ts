@@ -1,7 +1,7 @@
 /** @format */
 
 export abstract class ValueObject<T> {
-    public constructor(protected readonly value: T) {}
+    protected constructor(protected readonly value: T) {}
 
     public toString(): string {
         return `${this.value}`

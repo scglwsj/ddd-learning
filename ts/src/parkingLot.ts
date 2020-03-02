@@ -16,7 +16,6 @@ export class ParkingLot {
         this.parkedCars = new Map<Ticket, Car>()
     }
 
-
     public park(car: Car) {
         if (this.capacity <= 0) {
             throw new Error('capacity is not enough.')
@@ -41,4 +40,8 @@ export class ParkingLot {
     }
 }
 
-export class ParkingLotID extends ValueObject<String> {}
+export class ParkingLotID extends ValueObject<String> {
+    constructor(parkingLotID: String) {
+        super(parkingLotID)
+    }
+}

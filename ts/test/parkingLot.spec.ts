@@ -4,22 +4,22 @@ import {Car} from '../src/car'
 import {ParkingLot} from '../src/parkingLot'
 
 describe('parking lot test', () => {
-    let lot: ParkingLot
+    let parkingLot: ParkingLot
     beforeEach(() => {
-        lot = new ParkingLot(2)
+        parkingLot = new ParkingLot(2)
     })
 
     it('should return a ticket when given a car', () => {
         const car = new Car('川A 1B2C3')
-        const ticket = lot.park(car)
+        const ticket = parkingLot.park(car)
         expect(ticket).toBeDefined()
     })
 
     it('should return a car when given a ticket', () => {
         const car = new Car('川A 1B2C3')
-        const ticket = lot.park(car)
+        const ticket = parkingLot.park(car)
 
-        const takeCar = lot.take(ticket)
+        const takeCar = parkingLot.take(ticket)
 
         expect(takeCar).toBe(car)
     })
@@ -28,17 +28,17 @@ describe('parking lot test', () => {
         const car1 = new Car('川A 11111')
         const car2 = new Car('川A 22222')
         const car3 = new Car('川A 33333')
-        lot.park(car1)
-        lot.park(car2)
+        parkingLot.park(car1)
+        parkingLot.park(car2)
 
-        expect(() => lot.park(car3)).toThrowError()
+        expect(() => parkingLot.park(car3)).toThrowError()
     })
 
     it('should throw an error when given an invalid ticket', () => {
         const car = new Car('川A 1B2C3')
-        const ticket = lot.park(car)
-        lot.take(ticket)
+        const ticket = parkingLot.park(car)
+        parkingLot.take(ticket)
 
-        expect(() => lot.take(ticket)).toThrowError()
+        expect(() => parkingLot.take(ticket)).toThrowError()
     })
 })

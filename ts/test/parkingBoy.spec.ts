@@ -5,29 +5,29 @@ import {ParkingLot} from '../src/parkingLot'
 import {Car} from '../src/car'
 
 describe('parking boy test', () => {
-    let boy: ParkingBoy
-    let lot1: ParkingLot
-    let lot2: ParkingLot
+    let parkingBoy: ParkingBoy
+    let parkingLot1: ParkingLot
+    let parkingLot2: ParkingLot
 
     beforeEach(() => {
-        lot1 = new ParkingLot(1)
-        lot2 = new ParkingLot(2)
-        boy = new ParkingBoy([lot1, lot2])
+        parkingLot1 = new ParkingLot(1)
+        parkingLot2 = new ParkingLot(2)
+        parkingBoy = new ParkingBoy([parkingLot1, parkingLot2])
     })
 
     it('should park in first lot when given a car', () => {
         const car = new Car('川A 11111')
-        const ticket = boy.park(car)
-        expect(ticket.ParkingLot).toEqual(lot1.id)
+        const ticket = parkingBoy.park(car)
+        expect(ticket.ParkingLot).toEqual(parkingLot1.id)
     })
 
     it('should park in second lot when given one more car', () => {
         const car1 = new Car('川A 11111')
         const car2 = new Car('川A 22222')
-        boy.park(car1)
+        parkingBoy.park(car1)
 
-        const ticket = boy.park(car2)
+        const ticket = parkingBoy.park(car2)
 
-        expect(ticket.ParkingLot).toEqual(lot2.id)
+        expect(ticket.ParkingLot).toEqual(parkingLot2.id)
     })
 })
