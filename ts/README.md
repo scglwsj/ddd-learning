@@ -21,9 +21,3 @@ yarn
 ```bash
 yarn test
 ```
-
-## Formatting
-
-```bash
-yarn run format
-```
