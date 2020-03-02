@@ -6,9 +6,7 @@ learn DDD by parking in CSharp
 
 [C#](https://docs.microsoft.com/en-us/dotnet/csharp/) `8.0`
 
-[.Net](https://dotnet.microsoft.com/) `3.1.2`
-
-[NuGet](https://www.nuget.org/) `5.4.0`
+[.Net Core](https://dotnet.microsoft.com/) `3.1.2`
 
 ## Installation
 
