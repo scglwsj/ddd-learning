@@ -1,4 +1,4 @@
-﻿namespace parking
+﻿namespace Parking
 {
     public class Car : ValueObject<PlateNumber>
     {

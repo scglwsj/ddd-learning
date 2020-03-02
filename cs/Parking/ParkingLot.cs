@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace parking
+namespace Parking
 {
     public class ParkingLot
     {

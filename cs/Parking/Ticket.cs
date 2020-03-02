@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace parking
+namespace Parking
 {
     public class Ticket : ValueObject<TicketID>
     {

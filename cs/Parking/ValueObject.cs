@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 
-namespace parking
+namespace Parking
 {
     public abstract class ValueObject<T> : IEquatable<ValueObject<T>>
     {
