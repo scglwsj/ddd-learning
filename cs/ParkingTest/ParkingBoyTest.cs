@@ -6,23 +6,23 @@ namespace ParkingTest
 {
     public class ParkingBoyTest
     {
-        readonly ParkingBoy _parkingBoy;
-        readonly ParkingLot _parkingLot1;
-        readonly ParkingLot _parkingLot2;
+        readonly ParkingBoy parkingBoy;
+        readonly ParkingLot parkingLot1;
+        readonly ParkingLot parkingLot2;
 
         public ParkingBoyTest()
         {
-            _parkingLot1 = new ParkingLot(1);
-            _parkingLot2 = new ParkingLot(2);
-            _parkingBoy = new ParkingBoy(new List<ParkingLot> { _parkingLot1, _parkingLot2 });
+            parkingLot1 = new ParkingLot(1);
+            parkingLot2 = new ParkingLot(2);
+            parkingBoy = new ParkingBoy(new List<ParkingLot> { parkingLot1, parkingLot2 });
         }
 
         [Fact]
         public void Should_park_in_first_lot_when_given_a_car()
         {
             var car = new Car("川A 1B2C3");
-            var ticket = _parkingBoy.Park(car);
-            Assert.Equal(_parkingLot1.ID, ticket.ParkingLotID);
+            var ticket = parkingBoy.Park(car);
+            Assert.Equal(parkingLot1.ID, ticket.ParkingLotID);
         }
 
         [Fact]
@@ -30,11 +30,11 @@ namespace ParkingTest
         {
             var car1 = new Car("川A 11111");
             var car2 = new Car("川A 22222");
-            _parkingBoy.Park(car1);
+            parkingBoy.Park(car1);
 
-            var ticket = _parkingBoy.Park(car2);
+            var ticket = parkingBoy.Park(car2);
 
-            Assert.Equal(_parkingLot2.ID, ticket.ParkingLotID);
+            Assert.Equal(parkingLot2.ID, ticket.ParkingLotID);
         }
     }
 }

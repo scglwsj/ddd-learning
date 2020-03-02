@@ -6,40 +6,40 @@ namespace Parking
     public class ParkingLot
     {
         public ParkingLotID ID { get; private set; }
-        private int _capacity;
-        private readonly IDictionary<Ticket, Car> _parkedCars;
+        private int capacity;
+        private readonly IDictionary<Ticket, Car> parkedCars;
 
         public ParkingLot(int totalPosition)
         {
             ID = new ParkingLotID(Guid.NewGuid().ToString());
-            _capacity = totalPosition;
-            _parkedCars = new Dictionary<Ticket, Car>();
+            capacity = totalPosition;
+            parkedCars = new Dictionary<Ticket, Car>();
         }
 
         public Ticket Park(Car car)
         {
-            if (_capacity <= 0)
+            if (capacity <= 0)
             {
                 throw new Exception("capacity is not enough.");
             }
 
             var ticket = new Ticket(car.PlateNumber, ID);
-            _parkedCars.Add(ticket, car);
-            _capacity--;
+            parkedCars.Add(ticket, car);
+            capacity--;
             return ticket;
         }
 
         public Car Take(Ticket ticket)
         {
-            if (!ticket.IsValid || !_parkedCars.ContainsKey(ticket))
+            if (!ticket.IsValid || !parkedCars.ContainsKey(ticket))
             {
                 throw new Exception("Ticket is invalided.");
             }
 
-            var car = _parkedCars[ticket];
+            var car = parkedCars[ticket];
             ticket.Invalidate();
-            _parkedCars.Remove(ticket);
-            _capacity++;
+            parkedCars.Remove(ticket);
+            capacity++;
             return car;
         }
     }
