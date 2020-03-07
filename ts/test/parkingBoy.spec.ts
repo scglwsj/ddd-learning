@@ -1,9 +1,9 @@
 /** @format */
 
-import {ParkingBoy} from '../src/parkingBoy'
-import {ParkingLot} from '../src/parkingLot'
-import {Car} from '../src/car'
-import { SeniorParkingBoy } from '../src/seniorParkingBoy'
+import {ParkingBoy} from '../src/parkingBoy/parkingBoy'
+import {ParkingLot} from '../src/parkingLot/parkingLot'
+import {Car} from '../src/parkingLot/car'
+import { SeniorParkingBoy } from '../src/parkingBoy/seniorParkingBoy'
 
 describe('parking boy test', () => {
     let parkingBoy: ParkingBoy

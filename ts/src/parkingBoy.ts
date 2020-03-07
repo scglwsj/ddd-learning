@@ -1,8 +1,8 @@
 /** @format */
 
-import {ParkingLot} from './parkingLot'
+import {ParkingLot} from './parkingLot/parkingLot'
 import {ParkingBoyService} from './parkBoyService'
-import {OderParkingBoyService} from './orderParkingBoyService'
+import {OderParkingBoyService} from './parkingBoy/orderParkingBoyService'
 
 export class ParkingBoy {
     protected readonly parkingBoyService: ParkingBoyService

@@ -1,11 +1,11 @@
 @startuml parking
 
 interface ParkingBoyService {
-  ParkingLot findOneAviliedParkingLot(ParkingLot[])
+  ParkingLot? findOneAviliedParkingLot(ParkingLot[])
 }
 
 interface ParkingManagerService {
-  ParkingBoy findOneAviliedParkingBoy(ParkingBoy[])
+  ParkingBoy? findOneAviliedParkingBoy(ParkingBoy[])
 }
 
 class OrderParkingBoyService
@@ -20,7 +20,7 @@ class ParkingBoy << Entity >> {
   <<readonly>>
   + Boolean hasAvailableSpaces
 
-  + ParkingLot findOneAviliedParkingLot()
+  + ParkingLot? findOneAviliedParkingLot()
 }
 
 class SeniorParkingBoy << Entity >>
@@ -50,7 +50,7 @@ class Ticket << Value Object >> {
 
 class ParkingManager << Entity >> {
   ParkingBoy[] parkingBoys
-  + ParkingBoy findOneAviliedParkingBoy()
+  + ParkingBoy? findOneAviliedParkingBoy()
 }
 
 Ticket "1" *--> "1" Car

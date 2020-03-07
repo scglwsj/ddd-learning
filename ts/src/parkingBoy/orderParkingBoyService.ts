@@ -1,7 +1,7 @@
 /** @format */
 
 import {ParkingBoyService} from './parkBoyService'
-import {ParkingLot} from './parkingLot'
+import {ParkingLot} from '../parkingLot/parkingLot'
 
 export class OderParkingBoyService implements ParkingBoyService {
     public findOneAviliedParkingLot(parkingLots: ParkingLot[]) {

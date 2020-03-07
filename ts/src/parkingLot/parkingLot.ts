@@ -2,7 +2,7 @@
 
 import {Car} from './car'
 import {Ticket} from './ticket'
-import {ValueObject} from './valueObject'
+import {ValueObject} from '../valueObject'
 import {v4 as uuid} from 'uuid'
 
 export class ParkingLot {

@@ -1,6 +1,6 @@
 /** @format */
 
-import {ValueObject} from './valueObject'
+import {ValueObject} from '../valueObject'
 import {v4 as uuid} from 'uuid'
 import {PlateNumber} from './car'
 import {ParkingLotID} from './parkingLot'

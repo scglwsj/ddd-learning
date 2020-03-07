@@ -1,7 +1,7 @@
 /** @format */
 
-import {Car} from '../src/car'
-import {ParkingLot} from '../src/parkingLot'
+import {Car} from '../src/parkingLot/car'
+import {ParkingLot} from '../src/parkingLot/parkingLot'
 
 describe('parking lot test', () => {
     let parkingLot: ParkingLot
