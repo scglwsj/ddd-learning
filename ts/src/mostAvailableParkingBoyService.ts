@@ -8,7 +8,7 @@ export class MostAvailableParkingBoyService implements ParkingBoyService {
         return (
             parkingLots
                 .filter(({hasAvailableSpaces}) => hasAvailableSpaces)
-                .sort(({availableSpaces}) => availableSpaces)[0] || null
+                .sort(({availableSpaces}) => -availableSpaces)[0] || null
         )
     }
 }

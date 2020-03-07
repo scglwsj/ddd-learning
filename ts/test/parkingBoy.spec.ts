@@ -3,6 +3,7 @@
 import {ParkingBoy} from '../src/parkingBoy'
 import {ParkingLot} from '../src/parkingLot'
 import {Car} from '../src/car'
+import { SeniorParkingBoy } from '../src/seniorParkingBoy'
 
 describe('parking boy test', () => {
     let parkingBoy: ParkingBoy
@@ -41,5 +42,13 @@ describe('parking boy test', () => {
         const parkingLot = parkingBoy.findOneAviliedParkingLot()
 
         expect(parkingLot).toBeNull()
+    })
+
+    it('should return second lot when parking boy is senior', () => {
+        parkingBoy = new SeniorParkingBoy([parkingLot1, parkingLot2])
+
+        const parkingLot = parkingBoy.findOneAviliedParkingLot()!!
+
+        expect(parkingLot.id).toEqual(parkingLot2.id)
     })
 })

@@ -5,9 +5,10 @@ import {ParkingBoyService} from './parkBoyService'
 import {OderParkingBoyService} from './orderParkingBoyService'
 
 export class ParkingBoy {
-    private readonly parkingBoyService: ParkingBoyService
-    public constructor(private parkingLots: ParkingLot[]) {
-        this.parkingBoyService = new OderParkingBoyService()
+    protected readonly parkingBoyService: ParkingBoyService
+
+    public constructor(protected parkingLots: ParkingLot[], parkingBoyService?: ParkingBoyService) {
+        this.parkingBoyService = parkingBoyService || new OderParkingBoyService()
     }
 
     public get availableSpaces() {
