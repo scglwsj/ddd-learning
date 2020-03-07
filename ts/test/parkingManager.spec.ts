@@ -6,8 +6,6 @@ import {ParkingLot} from '../src/parkingLot/parkingLot'
 import {Car} from '../src/parkingLot/car'
 
 describe('parking manager tets.', () => {
-    // jest.mock('../src/parkingLot/ParkingBoy')
-    // const MockedParkingBoy = <jest.Mocked<typeof ParkingBoy>>ParkingBoy
     let parkingManager: ParkingManager
     let parkingBoy1: ParkingBoy
     let parkingBoy2: ParkingBoy
