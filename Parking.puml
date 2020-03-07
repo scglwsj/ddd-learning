@@ -1,0 +1,56 @@
+@startuml parking
+
+abstract class ParkingBoyService {
+  + ParkingLot? FindOneAviliedParkingLot(ParkingLot[])
+}
+
+abstract class ParkingManagerService {
+  + ParkingBoy? FindOneAviliedParkingBoy(ParkingBoy[])
+}
+
+class OrderParkingBoyService << Value Object >>
+class MostAvailableParkingBoyService << Value Object >>
+class RadomParkingManagerService << Value Object >>
+
+class ParkingBoy << Entity >> {
+
+ParkingBoyService parkingService
+  + ParkingLot[] parkingLots
+}
+
+class SeniorParkingBoy << Entity >>
+
+class ParkingLot << Entity >> {
+  ParkingLotId id
+  int capacity
+  Map <Ticket, Car> parkedCars
+
+  + Ticket park(Car car)
+  + Car take(Ticket ticket)
+}
+
+class Car << Value Object >> {
+    PlateNumber plateNumber
+}
+
+class Ticket << Value Object >> {
+  TicketID id
+  + Boolean validate()
+}
+
+class ParkingManager
+
+Ticket "1" *--> "1" Car
+ParkingLot "1" o--> "0..many" Ticket
+ParkingBoy "1" o--> "0..many" ParkingLot
+SeniorParkingBoy "1" o--> "0..many" ParkingLot
+OrderParkingBoyService --|> ParkingBoyService
+MostAvailableParkingBoyService --|> ParkingBoyService
+RadomParkingManagerService --|> ParkingManagerService
+ParkingBoy "1" o-up-> "1" ParkingBoyService
+SeniorParkingBoy "1" o-up-> "1" ParkingBoyService
+SeniorParkingBoy -> ParkingBoy
+ParkingManager "1" o--> "0..many" ParkingLot
+ParkingManager "1" o-up-> "1" ParkingManagerService
+
+@enduml
