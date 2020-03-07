@@ -6,24 +6,36 @@ import {ValueObject} from './valueObject'
 import {v4 as uuid} from 'uuid'
 
 export class ParkingLot {
-    public readonly id: ParkingLotID
-    private capacity: number
+    private readonly _id: ParkingLotID
+    private _availableSpaces: number
     private parkedCars: Map<Ticket, Car>
 
-    constructor(totalPosition: number) {
-        this.id = new ParkingLotID(uuid())
-        this.capacity = totalPosition
+    constructor(totalSpaces: number) {
+        this._id = new ParkingLotID(uuid())
+        this._availableSpaces = totalSpaces
         this.parkedCars = new Map<Ticket, Car>()
     }
 
+    public get id() {
+        return this._id
+    }
+
+    public get availableSpaces() {
+        return this._availableSpaces
+    }
+
+    public get hasAvailableSpaces() {
+        return this._availableSpaces > 0
+    }
+
     public park(car: Car) {
-        if (this.capacity <= 0) {
+        if (this._availableSpaces <= 0) {
             throw new Error('capacity is not enough.')
         }
 
-        const ticket = new Ticket(car.plant, this.id)
+        const ticket = new Ticket(car.plant, this._id)
         this.parkedCars.set(ticket, car)
-        this.capacity--
+        this._availableSpaces--
         return ticket
     }
 
@@ -35,7 +47,7 @@ export class ParkingLot {
         const car = this.parkedCars.get(ticket)
         ticket.invalidate()
         this.parkedCars.delete(ticket)
-        this.capacity++
+        this._availableSpaces++
         return car
     }
 }

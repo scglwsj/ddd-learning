@@ -1,18 +1,24 @@
 /** @format */
 
 import {ParkingLot} from './parkingLot'
-import {Car} from './car'
+import {ParkingBoyService} from './parkBoyService'
+import {OderParkingBoyService} from './orderParkingBoyService'
 
 export class ParkingBoy {
-    public constructor(public parkingLots: ParkingLot[]) {}
+    private readonly parkingBoyService: ParkingBoyService
+    public constructor(private parkingLots: ParkingLot[]) {
+        this.parkingBoyService = new OderParkingBoyService()
+    }
 
-    public park(car: Car) {
-        for (const parkingLot of this.parkingLots) {
-            try {
-                return parkingLot.park(car)
-            } catch {}
-        }
+    public get availableSpaces() {
+        return this.parkingLots.reduce((result, {availableSpaces}) => result + availableSpaces, 0)
+    }
 
-        throw new Error('capacity is not enough.')
+    public get hasAvailableSpaces() {
+        return this.parkingLots.some(({hasAvailableSpaces}) => hasAvailableSpaces)
+    }
+
+    public findOneAviliedParkingLot() {
+        return this.parkingBoyService.findOneAviliedParkingLot(this.parkingLots)
     }
 }

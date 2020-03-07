@@ -1,29 +1,39 @@
 @startuml parking
 
-abstract class ParkingBoyService {
-  + ParkingLot? FindOneAviliedParkingLot(ParkingLot[])
+interface ParkingBoyService {
+  ParkingLot findOneAviliedParkingLot(ParkingLot[])
 }
 
-abstract class ParkingManagerService {
-  + ParkingBoy? FindOneAviliedParkingBoy(ParkingBoy[])
+interface ParkingManagerService {
+  ParkingBoy findOneAviliedParkingBoy(ParkingBoy[])
 }
 
-class OrderParkingBoyService << Value Object >>
-class MostAvailableParkingBoyService << Value Object >>
-class RadomParkingManagerService << Value Object >>
+class OrderParkingBoyService
+class MostAvailableParkingBoyService
+class RadomParkingManagerService
 
 class ParkingBoy << Entity >> {
+  ParkingLot[] parkingLots
 
-ParkingBoyService parkingService
-  + ParkingLot[] parkingLots
+  <<readonly>>
+  + int availableSpaces
+  <<readonly>>
+  + Boolean hasAvailableSpaces
+
+  + ParkingLot findOneAviliedParkingLot()
 }
 
 class SeniorParkingBoy << Entity >>
 
 class ParkingLot << Entity >> {
-  ParkingLotId id
-  int capacity
   Map <Ticket, Car> parkedCars
+
+  <<readonly>>
+  + ParkingLotId id
+  <<readonly>>
+  + int availableSpaces
+  <<readonly>>
+  + Boolean hasAvailableSpaces
 
   + Ticket park(Car car)
   + Car take(Ticket ticket)
@@ -38,19 +48,20 @@ class Ticket << Value Object >> {
   + Boolean validate()
 }
 
-class ParkingManager
+class ParkingManager << Entity >> {
+  ParkingBoy[] parkingBoys
+  + ParkingBoy findOneAviliedParkingBoy()
+}
 
 Ticket "1" *--> "1" Car
 ParkingLot "1" o--> "0..many" Ticket
 ParkingBoy "1" o--> "0..many" ParkingLot
-SeniorParkingBoy "1" o--> "0..many" ParkingLot
 OrderParkingBoyService --|> ParkingBoyService
-MostAvailableParkingBoyService --|> ParkingBoyService
+MostAvailableParkingBoyService -|> ParkingBoyService
 RadomParkingManagerService --|> ParkingManagerService
 ParkingBoy "1" o-up-> "1" ParkingBoyService
-SeniorParkingBoy "1" o-up-> "1" ParkingBoyService
 SeniorParkingBoy -> ParkingBoy
-ParkingManager "1" o--> "0..many" ParkingLot
+ParkingManager "1" o-left-> "0..many" ParkingBoy
 ParkingManager "1" o-up-> "1" ParkingManagerService
 
 @enduml
