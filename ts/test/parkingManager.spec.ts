@@ -4,23 +4,24 @@ import {ParkingManager} from '../src/parkingManager/parkingManager'
 import {ParkingBoy} from '../src/parkingBoy/parkingBoy'
 import {ParkingLot} from '../src/parkingLot/parkingLot'
 import {Car} from '../src/parkingLot/car'
-import { SeniorParkingBoy } from '../src/parkingBoy/seniorParkingBoy'
+import {SeniorParkingBoy} from '../src/parkingBoy/seniorParkingBoy'
+import {BaseParkingBoy} from '../src/parkingBoy/baseParkingBoy'
 
 describe('parking manager tets.', () => {
     let parkingManager: ParkingManager
-    let parkingBoy1: ParkingBoy
-    let parkingBoy2: ParkingBoy
+    let parkingBoys: BaseParkingBoy[]
 
     beforeEach(() => {
-        parkingBoy1 = new ParkingBoy([new ParkingLot(1)])
-        parkingBoy2 = new SeniorParkingBoy([new ParkingLot(1)])
-        parkingManager = new ParkingManager([parkingBoy1, parkingBoy2])
+        const parkingBoy1 = new ParkingBoy([new ParkingLot(1)])
+        const parkingBoy2 = new SeniorParkingBoy([new ParkingLot(1)])
+        parkingBoys = [parkingBoy1, parkingBoy2]
+        parkingManager = new ParkingManager(parkingBoys)
     })
 
     it('should return one of the parking boys', () => {
         const parkingBoy = parkingManager.findOneValidParkingBoy()!!
 
-        expect([parkingBoy1, parkingBoy2].includes(parkingBoy)).toBeTruthy()
+        expect(parkingBoys).toContain(parkingBoy)
     })
 
     it('should return another one when parked one car', () => {
@@ -29,7 +30,7 @@ describe('parking manager tets.', () => {
 
         const anotherBoy = parkingManager.findOneValidParkingBoy()!!
 
-        expect([parkingBoy1, parkingBoy2].includes(anotherBoy)).toBeTruthy()
+        expect(parkingBoys).toContain(anotherBoy)
         expect(anotherBoy).not.toEqual(oneBoy)
     })
 })

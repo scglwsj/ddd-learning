@@ -6,26 +6,28 @@ namespace Parking
     public class ParkingLot
     {
         public ParkingLotID ID { get; private set; }
-        private int capacity;
+        public int AvailableSpaces { get; private set; }
+        public bool HasAvailableSpaces => AvailableSpaces > 0;
+
         private readonly IDictionary<Ticket, Car> parkedCars;
 
         public ParkingLot(int totalPosition)
         {
             ID = new ParkingLotID(Guid.NewGuid().ToString());
-            capacity = totalPosition;
+            AvailableSpaces = totalPosition;
             parkedCars = new Dictionary<Ticket, Car>();
         }
 
         public Ticket Park(Car car)
         {
-            if (capacity <= 0)
+            if (AvailableSpaces <= 0)
             {
                 throw new Exception("capacity is not enough.");
             }
 
             var ticket = new Ticket(car.PlateNumber, ID);
             parkedCars.Add(ticket, car);
-            capacity--;
+            AvailableSpaces--;
             return ticket;
         }
 
@@ -39,9 +41,10 @@ namespace Parking
             var car = parkedCars[ticket];
             ticket.Invalidate();
             parkedCars.Remove(ticket);
-            capacity++;
+            AvailableSpaces++;
             return car;
         }
+
     }
 
     public class ParkingLotID : ValueObject<string>

@@ -2,11 +2,10 @@
 
 import {MostAvailableParkingBoyService} from './mostAvailableParkingBoyService'
 import {ParkingLot} from '../parkingLot/parkingLot'
-import {ParkingBoy} from './parkingBoy'
+import {BaseParkingBoy} from './baseParkingBoy'
 
-export class SeniorParkingBoy extends ParkingBoy {
+export class SeniorParkingBoy extends BaseParkingBoy {
     public constructor(parkingLots: ParkingLot[]) {
-        super(parkingLots)
-        this.parkingBoyService = new MostAvailableParkingBoyService()
+        super(parkingLots, new MostAvailableParkingBoyService())
     }
 }

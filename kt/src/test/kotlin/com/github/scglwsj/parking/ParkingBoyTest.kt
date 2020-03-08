@@ -1,5 +1,6 @@
 package com.github.scglwsj.parking
 
+import com.github.scglwsj.parking.boy.BaseParkingBoy
 import com.github.scglwsj.parking.boy.ParkingBoy
 import com.github.scglwsj.parking.boy.SeniorParkingBoy
 import com.github.scglwsj.parking.lot.Car
@@ -10,7 +11,7 @@ import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 
 internal class ParkingBoyTest {
-    private lateinit var parkingBoy: ParkingBoy
+    private lateinit var parkingBoy: BaseParkingBoy
     private lateinit var parkingLot1: ParkingLot
     private lateinit var parkingLot2: ParkingLot
 

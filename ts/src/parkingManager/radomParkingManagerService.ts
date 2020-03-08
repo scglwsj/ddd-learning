@@ -1,10 +1,10 @@
 /** @format */
 
 import {ParkingManagerService} from './parkingManagerService'
-import {ParkingBoy} from '../parkingBoy/parkingBoy'
+import { BaseParkingBoy } from '../parkingBoy/baseParkingBoy'
 
 export class RandomParkingManagerService implements ParkingManagerService {
-    findOneValidParkingBoy(parkingBoys: ParkingBoy[]): ParkingBoy | null {
+    findOneValidParkingBoy(parkingBoys: BaseParkingBoy[]): BaseParkingBoy | null {
         return (
             parkingBoys
                 .filter(({hasAvailableSpaces}) => hasAvailableSpaces)

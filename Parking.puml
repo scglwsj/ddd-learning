@@ -5,15 +5,16 @@ interface ParkingBoyService {
 }
 
 interface ParkingManagerService {
-  ParkingBoy? findOneValidParkingBoy(ParkingBoy[])
+  BaseParkingBoy? findOneValidParkingBoy(BaseParkingBoy[])
 }
 
 class OrderParkingBoyService
 class MostAvailableParkingBoyService
 class RandomParkingManagerService
 
-class ParkingBoy << Entity >> {
+abstract class BaseParkingBoy << Entity >> {
   ParkingLot[] parkingLots
+  ParkingBoyService parkingBoyService
 
   <<readonly>>
   + int availableSpaces
@@ -23,6 +24,7 @@ class ParkingBoy << Entity >> {
   + ParkingLot? findOneValidParkingLot()
 }
 
+class ParkingBoy << Entity >>
 class SeniorParkingBoy << Entity >>
 
 class ParkingLot << Entity >> {
@@ -49,19 +51,20 @@ class Ticket << Value Object >> {
 }
 
 class ParkingManager << Entity >> {
-  ParkingBoy[] parkingBoys
-  + ParkingBoy? findOneValidParkingBoy()
+  BaseParkingBoy[] parkingBoys
+  + BaseParkingBoy? findOneValidParkingBoy()
 }
 
 Ticket "1" *--> "1" Car
 ParkingLot "1" o--> "0..many" Ticket
-ParkingBoy "1" o--> "0..many" ParkingLot
+BaseParkingBoy "1" o--> "0..many" ParkingLot
 OrderParkingBoyService --|> ParkingBoyService
 MostAvailableParkingBoyService -|> ParkingBoyService
 RandomParkingManagerService --|> ParkingManagerService
-ParkingBoy "1" o-up-> "1" ParkingBoyService
-SeniorParkingBoy -> ParkingBoy
-ParkingManager "1" o-left-> "0..many" ParkingBoy
+BaseParkingBoy "1" o-left-> "1" ParkingBoyService
+ParkingBoy --> BaseParkingBoy
+SeniorParkingBoy --> BaseParkingBoy
+ParkingManager "1" o-left-> "0..many" BaseParkingBoy
 ParkingManager "1" o-up-> "1" ParkingManagerService
 
 @enduml

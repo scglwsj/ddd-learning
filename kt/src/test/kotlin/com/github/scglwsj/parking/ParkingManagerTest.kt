@@ -1,11 +1,11 @@
 package com.github.scglwsj.parking
 
+import com.github.scglwsj.parking.boy.BaseParkingBoy
 import com.github.scglwsj.parking.boy.ParkingBoy
 import com.github.scglwsj.parking.boy.SeniorParkingBoy
 import com.github.scglwsj.parking.lot.Car
 import com.github.scglwsj.parking.lot.ParkingLot
 import com.github.scglwsj.parking.manager.ParkingManager
-import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.Assertions.assertNotEquals
 import org.junit.jupiter.api.Assertions.assertTrue
 import org.junit.jupiter.api.BeforeEach
@@ -13,22 +13,21 @@ import org.junit.jupiter.api.Test
 
 internal class ParkingManagerTest {
     private lateinit var parkingManager: ParkingManager
-    private lateinit var parkingBoy1: ParkingBoy
-    private lateinit var parkingBoy2: ParkingBoy
+    private lateinit var parkingBoys: List<BaseParkingBoy>
 
     @BeforeEach
     fun setUp() {
-
-        parkingBoy1 = ParkingBoy(listOf(ParkingLot(1)))
-        parkingBoy2 = SeniorParkingBoy(listOf(ParkingLot(1)))
-        parkingManager = ParkingManager(listOf(parkingBoy1, parkingBoy2))
+        val parkingBoy1 = ParkingBoy(listOf(ParkingLot(1)))
+        val parkingBoy2 = SeniorParkingBoy(listOf(ParkingLot(1)))
+        parkingBoys = listOf(parkingBoy1, parkingBoy2)
+        parkingManager = ParkingManager(parkingBoys)
     }
 
     @Test
     fun `should return one of the parking boys`() {
         val parkingBoy = parkingManager.findOneValidParkingBoy()!!
 
-        assertTrue(listOf(parkingBoy1, parkingBoy2).contains(parkingBoy))
+        assertTrue(parkingBoy in parkingBoys)
     }
 
     @Test
@@ -38,7 +37,7 @@ internal class ParkingManagerTest {
 
         val anotherBoy = parkingManager.findOneValidParkingBoy()!!
 
-        assertTrue(listOf(parkingBoy1, parkingBoy2).contains(anotherBoy))
+        assertTrue(anotherBoy in parkingBoys)
         assertNotEquals(oneBoy, anotherBoy)
     }
 }

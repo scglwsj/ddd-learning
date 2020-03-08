@@ -6,7 +6,7 @@ namespace ParkingTest
 {
     public class ParkingBoyTest
     {
-        readonly ParkingBoy parkingBoy;
+        BaseParkingBoy parkingBoy;
         readonly ParkingLot parkingLot1;
         readonly ParkingLot parkingLot2;
 
@@ -18,23 +18,42 @@ namespace ParkingTest
         }
 
         [Fact]
-        public void Should_park_in_first_lot_when_given_a_car()
+        public void Should_return_first_lot()
         {
-            var car = new Car("川A 1B2C3");
-            var ticket = parkingBoy.Park(car);
-            Assert.Equal(parkingLot1.ID, ticket.ParkingLotID);
+            var parkingLot = parkingBoy.FindOneValidParkingLot();
+            Assert.Equal(parkingLot1.ID, parkingLot.ID);
         }
 
         [Fact]
-        public void Should_park_in_second_lot_when_given_one_more_car()
+        public void Should_return_second_lot_when_parked_one_car()
         {
-            var car1 = new Car("川A 11111");
-            var car2 = new Car("川A 22222");
-            parkingBoy.Park(car1);
+            parkingBoy.FindOneValidParkingLot()!.Park(new Car("川A 11111"));
+          
+            var parkingLot = parkingBoy.FindOneValidParkingLot();
 
-            var ticket = parkingBoy.Park(car2);
+            Assert.Equal(parkingLot2.ID, parkingLot.ID);
+        }
 
-            Assert.Equal(parkingLot2.ID, ticket.ParkingLotID);
+        [Fact]
+        public void Should_return_null_when_parked_three_cars()
+        {
+            parkingBoy.FindOneValidParkingLot()!.Park(new Car("川A 11111"));
+            parkingBoy.FindOneValidParkingLot()!.Park(new Car("川B 22222"));
+            parkingBoy.FindOneValidParkingLot()!.Park(new Car("川C 33333"));
+
+            var parkingLot = parkingBoy.FindOneValidParkingLot();
+
+            Assert.Null(parkingLot);
+        }
+
+        [Fact]
+        public void Should_return_second_lot_when_parking_boy_is_senior()
+        {
+            parkingBoy = new SeniorParkingBoy(new List<ParkingLot> { parkingLot1, parkingLot2 });
+            
+            var parkingLot = parkingBoy.FindOneValidParkingLot();
+
+            Assert.Equal(parkingLot2.ID, parkingLot.ID);
         }
     }
 }

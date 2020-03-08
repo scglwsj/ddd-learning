@@ -4,9 +4,10 @@ import {ParkingBoy} from '../src/parkingBoy/parkingBoy'
 import {ParkingLot} from '../src/parkingLot/parkingLot'
 import {Car} from '../src/parkingLot/car'
 import { SeniorParkingBoy } from '../src/parkingBoy/seniorParkingBoy'
+import { BaseParkingBoy } from '../src/parkingBoy/baseParkingBoy'
 
 describe('parking boy test', () => {
-    let parkingBoy: ParkingBoy
+    let parkingBoy: BaseParkingBoy
     let parkingLot1: ParkingLot
     let parkingLot2: ParkingLot
 
@@ -23,8 +24,7 @@ describe('parking boy test', () => {
     })
 
     it('should return second lot when parked one car', () => {
-        const car = new Car('川A 11111')
-        parkingBoy.findOneValidParkingLot()!!.park(car)
+        parkingBoy.findOneValidParkingLot()!!.park(new Car('川A 11111'))
 
         const parkingLot = parkingBoy.findOneValidParkingLot()!!
 

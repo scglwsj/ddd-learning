@@ -1,7 +1,7 @@
 /** @format */
 
-import {ParkingBoy} from '../parkingBoy/parkingBoy'
+import { BaseParkingBoy } from '../parkingBoy/baseParkingBoy';
 
 export interface ParkingManagerService {
-    findOneValidParkingBoy(parkingLots: ParkingBoy[]): ParkingBoy | null
+    findOneValidParkingBoy(parkingBoys: BaseParkingBoy[]): BaseParkingBoy | null
 }
