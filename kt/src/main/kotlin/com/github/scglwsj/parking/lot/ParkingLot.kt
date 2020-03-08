@@ -1,33 +1,38 @@
-package com.github.scglwsj.parking
+package com.github.scglwsj.parking.lot
 
+import com.github.scglwsj.parking.ValueObject
 import java.lang.Exception
 import java.util.*
 
 class ParkingLot(totalPosition: Int) {
-    val id: ParkingLotID = ParkingLotID(UUID.randomUUID().toString())
-    private var capacity = totalPosition
+    val id: ParkingLotID =
+        ParkingLotID(UUID.randomUUID().toString())
+    var availableSpaces = totalPosition
+        private set
     private val parkedCars = mutableMapOf<Ticket, Car>()
 
     fun park(car: Car): Ticket {
-        if (capacity <= 0)
+        if (availableSpaces <= 0)
             throw Exception("capacity is not enough.")
 
         return Ticket(car.plant, id).also {
             parkedCars[it] = car
-            capacity--
+            availableSpaces--
         }
     }
 
     fun take(ticket: Ticket): Car {
-        if(!ticket.isValid||!parkedCars.containsKey(ticket))
+        if (!ticket.isValid || !parkedCars.containsKey(ticket))
             throw Exception("Ticket is invalided.")
 
         return parkedCars[ticket]!!.also {
             ticket.invalidate()
             parkedCars.remove(ticket)
-            capacity++
+            availableSpaces++
         }
     }
+
+    val hasAvailableSpaces: Boolean get() = availableSpaces > 0
 }
 
 class ParkingLotID(id: String) : ValueObject<String>(id)

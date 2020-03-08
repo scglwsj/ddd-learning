@@ -23,7 +23,7 @@ export class ParkingBoy {
         return this.parkingLots.some(({hasAvailableSpaces}) => hasAvailableSpaces)
     }
 
-    public findOneAviliedParkingLot() {
-        return this._parkingBoyService.findOneAviliedParkingLot(this.parkingLots)
+    public findOneValidParkingLot() {
+        return this._parkingBoyService.findOneValidParkingLot(this.parkingLots)
     }
 }

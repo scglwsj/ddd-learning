@@ -4,7 +4,7 @@ import {ParkingBoyService} from './parkBoyService'
 import {ParkingLot} from '../parkingLot/parkingLot'
 
 export class MostAvailableParkingBoyService implements ParkingBoyService {
-    public findOneAviliedParkingLot(parkingLots: ParkingLot[]) {
+    public findOneValidParkingLot(parkingLots: ParkingLot[]) {
         return (
             parkingLots
                 .filter(({hasAvailableSpaces}) => hasAvailableSpaces)

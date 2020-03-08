@@ -1,6 +1,11 @@
 package com.github.scglwsj.parking
 
+import com.github.scglwsj.parking.boy.ParkingBoy
+import com.github.scglwsj.parking.boy.SeniorParkingBoy
+import com.github.scglwsj.parking.lot.Car
+import com.github.scglwsj.parking.lot.ParkingLot
 import org.junit.jupiter.api.Assertions.assertEquals
+import org.junit.jupiter.api.Assertions.assertNull
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 
@@ -17,21 +22,37 @@ internal class ParkingBoyTest {
     }
 
     @Test
-    fun `should park in first lot when given a car`() {
-        val car = Car("'川A 11111")
-        val ticket = parkingBoy.park(car)
-        assertEquals(parkingLot1.id, ticket.parkingLotID)
+    fun `should return first lot`() {
+        val parkingLot = parkingBoy.findOneValidParkingLot()!!
+        assertEquals(parkingLot1.id, parkingLot.id)
     }
 
     @Test
-    fun `should park in second lot when given one more car`() {
-        val car1 = Car("川A 11111")
-        val car2 = Car("川A 22222")
-        parkingBoy.park(car1)
+    fun `should return second lot when parked one car`() {
+        parkingBoy.findOneValidParkingLot()!!.park(Car("川A 11111"))
 
-        val ticket = parkingBoy.park(car2)
+        val parkingLot = parkingBoy.findOneValidParkingLot()!!
 
-        assertEquals(parkingLot2.id, ticket.parkingLotID)
+        assertEquals(parkingLot2.id, parkingLot.id)
+    }
 
+    @Test
+    fun `should return null when parked three cars`() {
+        parkingBoy.findOneValidParkingLot()!!.park(Car("川A 11111"))
+        parkingBoy.findOneValidParkingLot()!!.park(Car("川B 22222"))
+        parkingBoy.findOneValidParkingLot()!!.park(Car("川C 33333"))
+
+        val parkingLot = parkingBoy.findOneValidParkingLot()
+
+        assertNull(parkingLot)
+    }
+
+    @Test
+    fun `should return second lot when parking boy is senior`() {
+        parkingBoy = SeniorParkingBoy(listOf(parkingLot1, parkingLot2))
+
+        val parkingLot = parkingBoy.findOneValidParkingLot()!!
+
+        assertEquals(parkingLot2.id, parkingLot.id)
     }
 }

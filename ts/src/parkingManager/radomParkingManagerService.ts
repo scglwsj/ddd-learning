@@ -3,8 +3,8 @@
 import {ParkingManagerService} from './parkingManagerService'
 import {ParkingBoy} from '../parkingBoy/parkingBoy'
 
-export class RadomParkingManagerService implements ParkingManagerService {
-    findOneAviliedParkingBoy(parkingBoys: ParkingBoy[]): ParkingBoy | null {
+export class RandomParkingManagerService implements ParkingManagerService {
+    findOneValidParkingBoy(parkingBoys: ParkingBoy[]): ParkingBoy | null {
         return (
             parkingBoys
                 .filter(({hasAvailableSpaces}) => hasAvailableSpaces)

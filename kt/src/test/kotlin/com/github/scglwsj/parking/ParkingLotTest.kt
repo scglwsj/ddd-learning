@@ -1,5 +1,7 @@
 package com.github.scglwsj.parking
 
+import com.github.scglwsj.parking.lot.Car
+import com.github.scglwsj.parking.lot.ParkingLot
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Assertions.assertNotNull
 import org.junit.jupiter.api.BeforeEach

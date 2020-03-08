@@ -3,5 +3,5 @@
 import {ParkingBoy} from '../parkingBoy/parkingBoy'
 
 export interface ParkingManagerService {
-    findOneAviliedParkingBoy(parkingLots: ParkingBoy[]): ParkingBoy | null
+    findOneValidParkingBoy(parkingLots: ParkingBoy[]): ParkingBoy | null
 }

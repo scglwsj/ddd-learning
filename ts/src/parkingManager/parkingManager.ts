@@ -2,16 +2,16 @@
 
 import {ParkingBoy} from '../parkingBoy/parkingBoy'
 import {ParkingManagerService} from './parkingManagerService'
-import {RadomParkingManagerService} from './radomParkingManagerService'
+import { RandomParkingManagerService } from './radomParkingManagerService'
 
 export class ParkingManager {
     private parkingManagerService: ParkingManagerService
 
     public constructor(private parkingBoys: ParkingBoy[]) {
-        this.parkingManagerService = new RadomParkingManagerService()
+        this.parkingManagerService = new RandomParkingManagerService()
     }
 
-    public findOneAviliedParkingBoy(): ParkingBoy | null {
-        return this.parkingManagerService.findOneAviliedParkingBoy(this.parkingBoys)
+    public findOneValidParkingBoy(): ParkingBoy | null {
+        return this.parkingManagerService.findOneValidParkingBoy(this.parkingBoys)
     }
 }
