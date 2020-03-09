@@ -10,6 +10,12 @@ learn DDD by parking in Kotlin
 
 [Gradle](https://gradle.org/) `6.2.1`
 
+ps:
+
+    use ./gradlew in Linux & MacOs
+
+    use ./gradlew.bat in Windows
+
 ## Building
 
 ```bash
