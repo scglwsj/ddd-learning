@@ -1,8 +1,8 @@
 package com.github.scglwsj.parking
 
-import com.github.scglwsj.parking.boy.BaseParkingBoy
+import com.github.scglwsj.parking.boy.MostAvailableParkingBoyRule
+import com.github.scglwsj.parking.boy.OderParkingBoyRule
 import com.github.scglwsj.parking.boy.ParkingBoy
-import com.github.scglwsj.parking.boy.SeniorParkingBoy
 import com.github.scglwsj.parking.lot.Car
 import com.github.scglwsj.parking.lot.ParkingLot
 import com.github.scglwsj.parking.manager.ParkingManager
@@ -13,31 +13,36 @@ import org.junit.jupiter.api.Test
 
 internal class ParkingManagerTest {
     private lateinit var parkingManager: ParkingManager
-    private lateinit var parkingBoys: List<BaseParkingBoy>
+    private lateinit var parkingLots: List<ParkingLot>
 
     @BeforeEach
     fun setUp() {
-        val parkingBoy1 = ParkingBoy(listOf(ParkingLot(1)))
-        val parkingBoy2 = SeniorParkingBoy(listOf(ParkingLot(1)))
-        parkingBoys = listOf(parkingBoy1, parkingBoy2)
-        parkingManager = ParkingManager(parkingBoys)
+        val parkingLot1 = ParkingLot(1)
+        val parkingLot2 = ParkingLot(1)
+        parkingLots = listOf(parkingLot1, parkingLot2)
+        parkingManager = ParkingManager(
+            listOf(
+                ParkingBoy(listOf(parkingLot1), OderParkingBoyRule()),
+                ParkingBoy(listOf(parkingLot2), MostAvailableParkingBoyRule())
+            )
+        )
     }
 
     @Test
-    fun `should return one of the parking boys`() {
-        val parkingBoy = parkingManager.findOneValidParkingBoy()!!
+    fun `should return one of the parking lots`() {
+        val parkingLot = parkingManager.findOneValidParkingLot()!!
 
-        assertTrue(parkingBoy in parkingBoys)
+        assertTrue(parkingLot in parkingLots)
     }
 
     @Test
     fun `should return another one when parked one car`() {
-        val oneBoy = parkingManager.findOneValidParkingBoy()!!
-        oneBoy.findOneValidParkingLot()!!.park(Car("川A 11111"))
+        val oneLot = parkingManager.findOneValidParkingLot()!!
+            .also { it.park(Car("川A 11111")) }
 
-        val anotherBoy = parkingManager.findOneValidParkingBoy()!!
+        val anotherLot = parkingManager.findOneValidParkingLot()!!
 
-        assertTrue(anotherBoy in parkingBoys)
-        assertNotEquals(oneBoy, anotherBoy)
+        assertTrue(anotherLot in parkingLots)
+        assertNotEquals(oneLot, anotherLot)
     }
 }

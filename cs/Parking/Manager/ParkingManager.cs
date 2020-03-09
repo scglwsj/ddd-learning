@@ -1,19 +1,24 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace Parking
 {
     public class ParkingManager
     {
-        private readonly IParkingManagerService parkingManagerService;
-        private readonly IReadOnlyList<BaseParkingBoy> parkingBoys;
+        private readonly IReadOnlyList<ParkingBoy> parkingBoys;
 
-        public ParkingManager(IReadOnlyList<BaseParkingBoy> parkingBoys)
+        public ParkingManager(IReadOnlyList<ParkingBoy> parkingBoys)
         {
             this.parkingBoys = parkingBoys;
-            parkingManagerService = new RandomParkingManagerService();
         }
 
-        public BaseParkingBoy FindOneValidParkingBoy() =>
-            parkingManagerService.FindOneValidParkingBoy(parkingBoys);
+        private ParkingBoy FindOneValidParkingBoy() =>
+        parkingBoys
+        .OrderBy(_ => new Random().Next(0, parkingBoys.Count))
+        .FirstOrDefault(parkingBoy => parkingBoy.CheckAvailableLot());
+
+        public ParkingLot FindOneValidParkingLot() =>
+            FindOneValidParkingBoy()?.FindOneValidParkingLot();
     }
 }

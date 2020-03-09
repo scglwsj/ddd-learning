@@ -1,31 +1,20 @@
 @startuml parking
 
-interface ParkingBoyService {
+interface ParkingBoyRule {
   ParkingLot? findOneValidParkingLot(ParkingLot[])
 }
 
-interface ParkingManagerService {
-  BaseParkingBoy? findOneValidParkingBoy(BaseParkingBoy[])
-}
+class OrderParkingBoyRule
+class MostAvailableParkingBoyRule
 
-class OrderParkingBoyService
-class MostAvailableParkingBoyService
-class RandomParkingManagerService
-
-abstract class BaseParkingBoy << Entity >> {
+class BaseParkingBoy << Entity >> {
   ParkingLot[] parkingLots
-  ParkingBoyService parkingBoyService
+  ParkingBoyRule parkingBoyRule
 
-  <<readonly>>
-  + int availableSpaces
-  <<readonly>>
-  + Boolean hasAvailableSpaces
+  + Boolean checkAvailableLot()
 
   + ParkingLot? findOneValidParkingLot()
 }
-
-class ParkingBoy << Entity >>
-class SeniorParkingBoy << Entity >>
 
 class ParkingLot << Entity >> {
   Map <Ticket, Car> parkedCars
@@ -52,19 +41,15 @@ class Ticket << Value Object >> {
 
 class ParkingManager << Entity >> {
   BaseParkingBoy[] parkingBoys
-  + BaseParkingBoy? findOneValidParkingBoy()
+  + ParkingLot? findOneValidParkingLot()
 }
 
 Ticket "1" *--> "1" Car
 ParkingLot "1" o--> "0..many" Ticket
 BaseParkingBoy "1" o--> "0..many" ParkingLot
-OrderParkingBoyService --|> ParkingBoyService
-MostAvailableParkingBoyService -|> ParkingBoyService
-RandomParkingManagerService --|> ParkingManagerService
-BaseParkingBoy "1" o-left-> "1" ParkingBoyService
-ParkingBoy --> BaseParkingBoy
-SeniorParkingBoy --> BaseParkingBoy
-ParkingManager "1" o-left-> "0..many" BaseParkingBoy
-ParkingManager "1" o-up-> "1" ParkingManagerService
+OrderParkingBoyRule --|> ParkingBoyRule
+MostAvailableParkingBoyRule -up-|> ParkingBoyRule
+BaseParkingBoy "1" o-left-> "1" ParkingBoyRule
+ParkingManager "1" o--> "0..many" BaseParkingBoy
 
 @enduml

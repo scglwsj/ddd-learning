@@ -2,7 +2,7 @@
 
 namespace Parking
 {
-    public interface IParkingBoyService
+    public interface IParkingBoyRule
     {
         ParkingLot FindOneValidParkingLot(IReadOnlyList<ParkingLot> parkingLots);
     }

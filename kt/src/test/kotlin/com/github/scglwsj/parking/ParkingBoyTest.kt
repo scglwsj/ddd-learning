@@ -1,8 +1,8 @@
 package com.github.scglwsj.parking
 
-import com.github.scglwsj.parking.boy.BaseParkingBoy
+import com.github.scglwsj.parking.boy.MostAvailableParkingBoyRule
+import com.github.scglwsj.parking.boy.OderParkingBoyRule
 import com.github.scglwsj.parking.boy.ParkingBoy
-import com.github.scglwsj.parking.boy.SeniorParkingBoy
 import com.github.scglwsj.parking.lot.Car
 import com.github.scglwsj.parking.lot.ParkingLot
 import org.junit.jupiter.api.Assertions.assertEquals
@@ -11,7 +11,7 @@ import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 
 internal class ParkingBoyTest {
-    private lateinit var parkingBoy: BaseParkingBoy
+    private lateinit var parkingBoy: ParkingBoy
     private lateinit var parkingLot1: ParkingLot
     private lateinit var parkingLot2: ParkingLot
 
@@ -19,7 +19,7 @@ internal class ParkingBoyTest {
     fun setUp() {
         parkingLot1 = ParkingLot(1)
         parkingLot2 = ParkingLot(2)
-        parkingBoy = ParkingBoy(listOf(parkingLot1, parkingLot2))
+        parkingBoy = ParkingBoy(listOf(parkingLot1, parkingLot2), OderParkingBoyRule())
     }
 
     @Test
@@ -49,8 +49,8 @@ internal class ParkingBoyTest {
     }
 
     @Test
-    fun `should return second lot when parking boy is senior`() {
-        parkingBoy = SeniorParkingBoy(listOf(parkingLot1, parkingLot2))
+    fun `should return second lot when parking boy use senior rule`() {
+        parkingBoy = ParkingBoy(listOf(parkingLot1, parkingLot2), MostAvailableParkingBoyRule())
 
         val parkingLot = parkingBoy.findOneValidParkingLot()!!
 

@@ -7,11 +7,11 @@ class Ticket(private val carPlate: PlateNumber, val parkingLotID: ParkingLotID) 
     ValueObject<TicketID>(
         TicketID(UUID.randomUUID().toString())
     ) {
-    var valid = true
-    val isValid get() = valid
+    var isValid = true
+        private set
     val id get() = value
     fun invalidate() {
-        valid = false
+        isValid = false
     }
 }
 

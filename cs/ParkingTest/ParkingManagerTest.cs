@@ -7,34 +7,37 @@ namespace ParkingTest
     public class ParkingManagerTest
     {
         readonly ParkingManager parkingManager;
-        readonly IReadOnlyList<BaseParkingBoy> parkingBoys;
+        readonly IReadOnlyList<ParkingLot> parkingLots;
 
         public ParkingManagerTest()
         {
-            var parkingBoy1 = new ParkingBoy(new List<ParkingLot> { new ParkingLot(1) });
-            var parkingBoy2 = new SeniorParkingBoy(new List<ParkingLot> { new ParkingLot(1) });
-            parkingBoys = new List<BaseParkingBoy> { parkingBoy1, parkingBoy2 };
-            parkingManager = new ParkingManager(parkingBoys);
+            var parkingLot1 = new ParkingLot(1);
+            var parkingLot2 = new ParkingLot(1);
+            parkingLots = new List<ParkingLot> { parkingLot1, parkingLot2 };
+            parkingManager = new ParkingManager(new List<ParkingBoy> {
+                new ParkingBoy(new List<ParkingLot> { parkingLot1 }, new OderParkingBoyRule()),
+                new ParkingBoy(new List<ParkingLot> { parkingLot2 }, new MostAvailableParkingBoyRule())
+            });
         }
 
         [Fact]
-        public void Should_return_one_of_the_parking_boys()
+        public void Should_return_one_of_the_parking_lots()
         {
-            var parkingBoy = parkingManager.FindOneValidParkingBoy();
+            var parkingLot = parkingManager.FindOneValidParkingLot();
 
-            Assert.Contains(parkingBoy, parkingBoys);
+            Assert.Contains(parkingLot, parkingLots);
         }
 
         [Fact]
         public void Should_return_another_one_when_parked_one_car()
         {
-            var oneBoy = parkingManager.FindOneValidParkingBoy();
-            oneBoy.FindOneValidParkingLot().Park(new Car("川A 11111"));
+            var oneLot = parkingManager.FindOneValidParkingLot();
+            oneLot.Park(new Car("川A 11111"));
 
-            var anotherBoy = parkingManager.FindOneValidParkingBoy();
+            var anotherLot = parkingManager.FindOneValidParkingLot();
 
-            Assert.Contains(anotherBoy, parkingBoys);
-            Assert.NotEqual(oneBoy, anotherBoy);
+            Assert.Contains(anotherLot, parkingLots);
+            Assert.NotEqual(oneLot, anotherLot);
         }
     }
 }

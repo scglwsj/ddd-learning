@@ -2,6 +2,6 @@
 
 import {ParkingLot} from '../parkingLot/parkingLot'
 
-export interface ParkingBoyService {
+export interface ParkingBoyRule {
     findOneValidParkingLot(parkingLots: ParkingLot[]): ParkingLot | null
 }

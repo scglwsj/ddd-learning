@@ -3,7 +3,7 @@ using System.Linq;
 
 namespace Parking
 {
-    class MostAvailableParkingBoyService : IParkingBoyService
+    public class MostAvailableParkingBoyRule : IParkingBoyRule
     {
         public ParkingLot FindOneValidParkingLot(IReadOnlyList<ParkingLot> parkingLots) =>
             parkingLots

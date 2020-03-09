@@ -4,33 +4,36 @@ import {ParkingManager} from '../src/parkingManager/parkingManager'
 import {ParkingBoy} from '../src/parkingBoy/parkingBoy'
 import {ParkingLot} from '../src/parkingLot/parkingLot'
 import {Car} from '../src/parkingLot/car'
-import {SeniorParkingBoy} from '../src/parkingBoy/seniorParkingBoy'
-import {BaseParkingBoy} from '../src/parkingBoy/baseParkingBoy'
+import {OderParkingBoyRule} from '../src/parkingBoy/orderParkingBoyRule'
+import {MostAvailableParkingBoyRule} from '../src/parkingBoy/mostAvailableParkingBoyRule'
 
 describe('parking manager tets.', () => {
     let parkingManager: ParkingManager
-    let parkingBoys: BaseParkingBoy[]
+    let parkingLots: ParkingLot[]
 
     beforeEach(() => {
-        const parkingBoy1 = new ParkingBoy([new ParkingLot(1)])
-        const parkingBoy2 = new SeniorParkingBoy([new ParkingLot(1)])
-        parkingBoys = [parkingBoy1, parkingBoy2]
-        parkingManager = new ParkingManager(parkingBoys)
+        const parkingLot1 = new ParkingLot(1)
+        const parkingLot2 = new ParkingLot(1)
+        parkingLots = [parkingLot1, parkingLot2]
+        parkingManager = new ParkingManager([
+            new ParkingBoy([parkingLot1], new OderParkingBoyRule()),
+            new ParkingBoy([parkingLot2], new MostAvailableParkingBoyRule()),
+        ])
     })
 
-    it('should return one of the parking boys', () => {
-        const parkingBoy = parkingManager.findOneValidParkingBoy()!!
+    it('should return one of the parking lots', () => {
+        const parkingLot = parkingManager.findOneValidParkingLot()!!
 
-        expect(parkingBoys).toContain(parkingBoy)
+        expect(parkingLots).toContain(parkingLot)
     })
 
     it('should return another one when parked one car', () => {
-        const oneBoy = parkingManager.findOneValidParkingBoy()!!
-        oneBoy.findOneValidParkingLot()!!.park(new Car('川A 11111'))
+        const oneLot = parkingManager.findOneValidParkingLot()!!
+        oneLot.park(new Car('川A 11111'))
 
-        const anotherBoy = parkingManager.findOneValidParkingBoy()!!
+        const anotherLot = parkingManager.findOneValidParkingLot()!!
 
-        expect(parkingBoys).toContain(anotherBoy)
-        expect(anotherBoy).not.toEqual(oneBoy)
+        expect(parkingLots).toContain(anotherLot)
+        expect(anotherLot).not.toEqual(oneLot)
     })
 })

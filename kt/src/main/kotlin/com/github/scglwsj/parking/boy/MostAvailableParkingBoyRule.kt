@@ -2,7 +2,7 @@ package com.github.scglwsj.parking.boy
 
 import com.github.scglwsj.parking.lot.ParkingLot
 
-class OderParkingBoyService : ParkingBoyService {
+class MostAvailableParkingBoyRule : ParkingBoyRule {
     override fun findOneValidParkingLot(parkingLots: List<ParkingLot>): ParkingLot? =
-        parkingLots.firstOrNull { it.hasAvailableSpaces }
+        parkingLots.sortedByDescending { it.availableSpaces }.firstOrNull { it.hasAvailableSpaces }
 }

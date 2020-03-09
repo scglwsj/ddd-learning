@@ -6,7 +6,7 @@ namespace ParkingTest
 {
     public class ParkingBoyTest
     {
-        BaseParkingBoy parkingBoy;
+        ParkingBoy parkingBoy;
         readonly ParkingLot parkingLot1;
         readonly ParkingLot parkingLot2;
 
@@ -14,7 +14,7 @@ namespace ParkingTest
         {
             parkingLot1 = new ParkingLot(1);
             parkingLot2 = new ParkingLot(2);
-            parkingBoy = new ParkingBoy(new List<ParkingLot> { parkingLot1, parkingLot2 });
+            parkingBoy = new ParkingBoy(new List<ParkingLot> { parkingLot1, parkingLot2 },new OderParkingBoyRule());
         }
 
         [Fact]
@@ -47,9 +47,9 @@ namespace ParkingTest
         }
 
         [Fact]
-        public void Should_return_second_lot_when_parking_boy_is_senior()
+        public void Should_return_second_lot_when_parking_boy_use_senior_rule()
         {
-            parkingBoy = new SeniorParkingBoy(new List<ParkingLot> { parkingLot1, parkingLot2 });
+            parkingBoy = new ParkingBoy(new List<ParkingLot> { parkingLot1, parkingLot2 },new MostAvailableParkingBoyRule());
             
             var parkingLot = parkingBoy.FindOneValidParkingLot();
 

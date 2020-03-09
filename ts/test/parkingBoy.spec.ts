@@ -1,20 +1,20 @@
 /** @format */
 
-import {ParkingBoy} from '../src/parkingBoy/parkingBoy'
 import {ParkingLot} from '../src/parkingLot/parkingLot'
 import {Car} from '../src/parkingLot/car'
-import { SeniorParkingBoy } from '../src/parkingBoy/seniorParkingBoy'
-import { BaseParkingBoy } from '../src/parkingBoy/baseParkingBoy'
+import {ParkingBoy} from '../src/parkingBoy/parkingBoy'
+import {OderParkingBoyRule} from '../src/parkingBoy/orderParkingBoyRule'
+import {MostAvailableParkingBoyRule} from '../src/parkingBoy/mostAvailableParkingBoyRule'
 
 describe('parking boy test', () => {
-    let parkingBoy: BaseParkingBoy
+    let parkingBoy: ParkingBoy
     let parkingLot1: ParkingLot
     let parkingLot2: ParkingLot
 
     beforeEach(() => {
         parkingLot1 = new ParkingLot(1)
         parkingLot2 = new ParkingLot(2)
-        parkingBoy = new ParkingBoy([parkingLot1, parkingLot2])
+        parkingBoy = new ParkingBoy([parkingLot1, parkingLot2], new OderParkingBoyRule())
     })
 
     it('should return first lot', () => {
@@ -44,8 +44,8 @@ describe('parking boy test', () => {
         expect(parkingLot).toBeNull()
     })
 
-    it('should return second lot when parking boy is senior', () => {
-        parkingBoy = new SeniorParkingBoy([parkingLot1, parkingLot2])
+    it('should return second lot when parking boy use senior rule', () => {
+        parkingBoy = new ParkingBoy([parkingLot1, parkingLot2], new MostAvailableParkingBoyRule())
 
         const parkingLot = parkingBoy.findOneValidParkingLot()!!
 

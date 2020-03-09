@@ -3,9 +3,9 @@ using System.Linq;
 
 namespace Parking
 {
-    class OderParkingBoyService : IParkingBoyService
+    public class OderParkingBoyRule : IParkingBoyRule
     {
-        public ParkingLot FindOneValidParkingLot(IReadOnlyList<ParkingLot> parkingLots) => 
+        public ParkingLot FindOneValidParkingLot(IReadOnlyList<ParkingLot> parkingLots) =>
             parkingLots.FirstOrDefault(parkingLot => parkingLot.HasAvailableSpaces);
     }
 }
