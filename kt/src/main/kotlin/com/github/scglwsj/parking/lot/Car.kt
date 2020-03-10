@@ -1,11 +1,7 @@
 package com.github.scglwsj.parking.lot
 
-import com.github.scglwsj.parking.ValueObject
-
-class Car(plant: String) : ValueObject<PlateNumber>(
-    PlateNumber(plant)
-) {
-    val plant: PlateNumber get() = this.value
+data class Car(private val plantString: String) {
+    val plant = PlateNumber(plantString)
 }
 
-class PlateNumber(plant: String) : ValueObject<String>(plant)
+data class PlateNumber(val plant: String)

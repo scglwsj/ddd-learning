@@ -1,6 +1,5 @@
 package com.github.scglwsj.parking.lot
 
-import com.github.scglwsj.parking.ValueObject
 import java.lang.Exception
 import java.util.*
 
@@ -35,4 +34,4 @@ class ParkingLot(totalPosition: Int) {
     val hasAvailableSpaces: Boolean get() = availableSpaces > 0
 }
 
-class ParkingLotID(id: String) : ValueObject<String>(id)
+data class ParkingLotID(val id: String)
