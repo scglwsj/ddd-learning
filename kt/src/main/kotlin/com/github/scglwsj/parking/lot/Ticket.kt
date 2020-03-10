@@ -2,7 +2,7 @@ package com.github.scglwsj.parking.lot
 
 import java.util.*
 
-data class Ticket(private val carPlate: PlateNumber, val parkingLotID: ParkingLotID) {
+data class Ticket(val carPlate: PlateNumber, val parkingLotID: ParkingLotID) {
     val id = TicketID(UUID.randomUUID().toString())
     var isValid = true
         private set
