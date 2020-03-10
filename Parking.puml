@@ -7,7 +7,7 @@ interface ParkingBoyRule {
 class OrderParkingBoyRule
 class MostAvailableParkingBoyRule
 
-class BaseParkingBoy << Entity >> {
+class ParkingBoy << Entity >> {
   ParkingLot[] parkingLots
   ParkingBoyRule parkingBoyRule
 
@@ -40,16 +40,16 @@ class Ticket << Value Object >> {
 }
 
 class ParkingManager << Entity >> {
-  BaseParkingBoy[] parkingBoys
+  ParkingBoy[] parkingBoys
   + ParkingLot? findOneValidParkingLot()
 }
 
 Ticket "1" *--> "1" Car
 ParkingLot "1" o--> "0..many" Ticket
-BaseParkingBoy "1" o--> "0..many" ParkingLot
+ParkingBoy "1" o--> "0..many" ParkingLot
 OrderParkingBoyRule --|> ParkingBoyRule
 MostAvailableParkingBoyRule -up-|> ParkingBoyRule
-BaseParkingBoy "1" o-left-> "1" ParkingBoyRule
-ParkingManager "1" o--> "0..many" BaseParkingBoy
+ParkingBoy "1" o-left-> "1" ParkingBoyRule
+ParkingManager "1" o--> "0..many" ParkingBoy
 
 @enduml
