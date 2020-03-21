@@ -1,10 +1,10 @@
 /** @format */
 
-import {ParkingLot} from '../src/parkingLot/parkingLot'
-import {Car} from '../src/parkingLot/car'
-import {ParkingBoy} from '../src/parkingBoy/parkingBoy'
-import {OderParkingBoyRule} from '../src/parkingBoy/orderParkingBoyRule'
-import {MostAvailableParkingBoyRule} from '../src/parkingBoy/mostAvailableParkingBoyRule'
+import {ParkingBoy} from '../domain/parkingLot/finder/parkingBoy'
+import {ParkingLot, ParkingLotId} from '../domain/parkingLot/parking/parkingLot'
+import {OderParkingBoyRule} from '../domain/parkingLot/rule/orderParkingBoyRule'
+import {Car} from '../domain/parkingLot/parking/car'
+import {MostAvailableParkingBoyRule} from '../domain/parkingLot/rule/mostAvailableParkingBoyRule'
 
 describe('parking boy test', () => {
     let parkingBoy: ParkingBoy
@@ -12,9 +12,9 @@ describe('parking boy test', () => {
     let parkingLot2: ParkingLot
 
     beforeEach(() => {
-        parkingLot1 = new ParkingLot(1)
-        parkingLot2 = new ParkingLot(2)
-        parkingBoy = new ParkingBoy([parkingLot1, parkingLot2], new OderParkingBoyRule())
+        parkingLot1 = new ParkingLot(new ParkingLotId('1'), 1)
+        parkingLot2 = new ParkingLot(new ParkingLotId('2'), 2)
+        parkingBoy = new ParkingBoy('1', [parkingLot1, parkingLot2], new OderParkingBoyRule())
     })
 
     it('should return first lot', () => {
@@ -45,7 +45,7 @@ describe('parking boy test', () => {
     })
 
     it('should return second lot when parking boy use senior rule', () => {
-        parkingBoy = new ParkingBoy([parkingLot1, parkingLot2], new MostAvailableParkingBoyRule())
+        parkingBoy = new ParkingBoy('2', [parkingLot1, parkingLot2], new MostAvailableParkingBoyRule())
 
         const parkingLot = parkingBoy.findOneValidParkingLot()!!
 

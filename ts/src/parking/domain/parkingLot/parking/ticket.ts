@@ -1,14 +1,14 @@
 /** @format */
 
-import {ValueObject} from '../valueObject'
 import {v4 as uuid} from 'uuid'
 import {PlateNumber} from './car'
-import {ParkingLotID} from './parkingLot'
+import {ParkingLotId} from './parkingLot'
+import {ValueObject} from '../../valueObject'
 
 export class Ticket extends ValueObject<TicketID> {
     private valid: Boolean
 
-    public constructor(public readonly carPlante: PlateNumber, public readonly ParkingLot: ParkingLotID) {
+    public constructor(public readonly carPlante: PlateNumber, public readonly ParkingLot: ParkingLotId) {
         super(new TicketID(uuid()))
         this.valid = true
     }

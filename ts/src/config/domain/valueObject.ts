@@ -3,7 +3,7 @@
 export abstract class ValueObject<T> {
     protected constructor(protected readonly value: T) {}
 
-    public toString(): string {
+    public toString() {
         return `${this.value}`
     }
 

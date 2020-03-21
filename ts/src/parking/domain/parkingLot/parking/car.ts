@@ -1,6 +1,6 @@
 /** @format */
 
-import {ValueObject} from '../valueObject'
+import {ValueObject} from '../../valueObject'
 
 export class Car extends ValueObject<PlateNumber> {
     public constructor(plant: String) {

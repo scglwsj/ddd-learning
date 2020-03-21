@@ -16,9 +16,26 @@ and ther is the config's modeling:
 
 ![avatar](out/design/class/config%20context.png)
 
-and in the bussiness `park`, there is the sequence
+in the bussiness `park`, there is the sequence
 
 ![avatar](out/design/sequence/park.png)
+
+in the bussiness `create parking manager`, there is the sequence
+
+![avatar](out/design/sequence/create%20parking%20manager.png)
+
+`ps: in those sequence,diffrent colour in diffrent layer:`
+
+<font color=LightCoral>light coral in external user</font>
+
+<font color=LightBlue>light blue in application service</font>
+
+<font color=LightGreen>light green in domain</font>
+
+<font color=LightYellow>light yellow in adapter</font>
+
+<font color=LightGray>light gray in external system</font>
+
 
 ## TypeScript
 

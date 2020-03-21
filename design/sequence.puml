@@ -3,41 +3,52 @@ actor user #LightCoral
 
 box parking context
     participant parkingApplicationService #LightBlue
-    participant IParkingLotFinderFactory #LightGreen
-    participant ParkingManager #LightGreen
-    participant ParkingLot #LightGreen
-    participant ParkingLotFinderFactory #LightYellow
+    participant ParkingLotFinderFactory #LightGreen
+    entity  ParkingManager #LightGreen
+    entity  ParkingLot #LightGreen
+
+end box
+
+user -> parkingApplicationService: park(car)
+ParkingManager -> ParkingLot: findOneValidParkingLot
+ParkingLot -> parkingApplicationService: ParkingLot
+parkingApplicationService -> ParkingLot: park(car)
+ParkingLot -> parkingApplicationService: Ticket
+parkingApplicationService-> user: Ticket
+@enduml
+
+@startuml create parking manager
+box parking context
+    participant parkingApplicationService #LightBlue
+    participant ParkingLotFinderFactory #LightGreen
+    participant configClient #LightYellow
 end box
 
 box config context
     participant configApplicationService #LightBlue
-    participant IParkingBoyRepository #LightGreen
-    participant IParkingLotRepository #LightGreen
+    participant ParkingBoyService #LightGreen
+    participant ParkingBoyRepository #LightGreen
+    participant ParkingLotRepository #LightGreen
     participant ParkingBoyRepository #LightYellow
     participant ParkingLotRepository #LightYellow
 end box
-
 database db #LightGray
 
-user -> parkingApplicationService: park
-parkingApplicationService -> IParkingLotFinderFactory: newParkingManager
-IParkingLotFinderFactory -> ParkingLotFinderFactory: newParkingManager
-ParkingLotFinderFactory -> configApplicationService: findBoysByIds
-configApplicationService -> IParkingBoyRepository: findBoysByIds
-IParkingBoyRepository -> ParkingBoyRepository: findBoysByIds
-ParkingBoyRepository -> db: findBoysByIds
-db -> ParkingBoyRepository: parkingBoys
-ParkingBoyRepository -> configApplicationService: parkingBoys
-configApplicationService -> IParkingLotRepository: findLotsByIds
-IParkingLotRepository -> ParkingLotRepository: findLotsByIds
-ParkingLotRepository -> db: findLotsByIds
-db -> ParkingLotRepository: parkingLots
-ParkingLotRepository -> configApplicationService: parkingLots
-configApplicationService -> ParkingLotFinderFactory: parkingBoys
-ParkingLotFinderFactory -> ParkingManager: parkingManager
-ParkingManager -> ParkingLot: findOneValidParkingLot
-ParkingLot -> parkingApplicationService: parkingLot
-parkingApplicationService -> ParkingLot: park
-ParkingLot -> parkingApplicationService: ticket
-parkingApplicationService-> user: ticket
+parkingApplicationService -> ParkingLotFinderFactory: newParkingManager
+ParkingLotFinderFactory -> configClient: newParkingManager
+configClient -> configApplicationService: findParkingBoys
+configApplicationService -> ParkingBoyService: findParkingBoys
+ParkingBoyService -> ParkingBoyRepository: findParkingBoys
+ParkingBoyRepository -> db: findParkingBoys
+db -> ParkingBoyRepository: ParkingBoys
+ParkingBoyRepository -> ParkingBoyService: ParkingBoys
+ParkingBoyService -> ParkingLotRepository: findParkingLotsByIds(parkingLotIds)
+ParkingLotRepository -> db: findParkingLotsByIds(parkingLotIds)
+db -> ParkingLotRepository: ParkingLots
+ParkingLotRepository -> ParkingBoyService: ParkingLots
+ParkingBoyService -> ParkingBoyService: Triple(ParkingBoy, ParkingLot[])[]
+ParkingBoyService -> configApplicationService: Triple(ParkingBoy, ParkingLot[])[]
+configApplicationService -> configClient: Triple(ParkingBoy, ParkingLot[])[]
+configClient -> ParkingLotFinderFactory: ParkingManager
+ParkingLotFinderFactory -> parkingApplicationService: ParkingManager
 @enduml

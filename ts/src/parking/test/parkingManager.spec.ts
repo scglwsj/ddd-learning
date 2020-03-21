@@ -1,23 +1,23 @@
 /** @format */
 
-import {ParkingManager} from '../src/parkingManager/parkingManager'
-import {ParkingBoy} from '../src/parkingBoy/parkingBoy'
-import {ParkingLot} from '../src/parkingLot/parkingLot'
-import {Car} from '../src/parkingLot/car'
-import {OderParkingBoyRule} from '../src/parkingBoy/orderParkingBoyRule'
-import {MostAvailableParkingBoyRule} from '../src/parkingBoy/mostAvailableParkingBoyRule'
+import {ParkingLot, ParkingLotId} from '../domain/parkingLot/parking/parkingLot'
+import {ParkingBoy} from '../domain/parkingLot/finder/parkingBoy'
+import {OderParkingBoyRule} from '../domain/parkingLot/rule/orderParkingBoyRule'
+import {MostAvailableParkingBoyRule} from '../domain/parkingLot/rule/mostAvailableParkingBoyRule'
+import {Car} from '../domain/parkingLot/parking/car'
+import {ParkingManager} from '../domain/parkingLot/finder/parkingManager'
 
 describe('parking manager tets.', () => {
     let parkingManager: ParkingManager
     let parkingLots: ParkingLot[]
 
     beforeEach(() => {
-        const parkingLot1 = new ParkingLot(1)
-        const parkingLot2 = new ParkingLot(1)
+        const parkingLot1 = new ParkingLot(new ParkingLotId('1'), 1)
+        const parkingLot2 = new ParkingLot(new ParkingLotId('2'), 1)
         parkingLots = [parkingLot1, parkingLot2]
         parkingManager = new ParkingManager([
-            new ParkingBoy([parkingLot1], new OderParkingBoyRule()),
-            new ParkingBoy([parkingLot2], new MostAvailableParkingBoyRule()),
+            new ParkingBoy('1', [parkingLot1], new OderParkingBoyRule()),
+            new ParkingBoy('2', [parkingLot2], new MostAvailableParkingBoyRule()),
         ])
     })
 

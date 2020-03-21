@@ -23,22 +23,22 @@ package parking << core >> {
     + Boolean validate()
   }
 
-  interface IParkingLotFinder {
+  interface ParkingLotFinder {
     ParkingLot? findOneValidParkingLot()
   }
 
-  interface IParkingLotFinderFactory << Factory >> {
-    IParkingLotFinder newParkingManager()
-    IParkingLotFinder newParkingBoy(ParkingBoyId)
+  interface ParkingLotFinderFactory << Factory >> {
+    ParkingLotFinder newParkingManager()
+    ParkingLotFinder newParkingBoy(ParkingBoyId)
   }
 
   Ticket "1" *--> "1" Car
   ParkingLot "1" o--> "0..many" Ticket
-  IParkingLotFinderFactory ..> IParkingLotFinder
+  ParkingLotFinderFactory ..> ParkingLotFinder
 }
 
 package finder {
-  interface IParkingBoyRule << strategy >> {
+  interface ParkingBoyRule << strategy >> {
     ParkingLot? findOneValidParkingLot(ParkingLot[])
   }
 
@@ -47,7 +47,7 @@ package finder {
     + ParkingBoyId id
 
     ParkingLot[] parkingLots
-    IParkingBoyRule parkingBoyRule
+    ParkingBoyRule parkingBoyRule
 
     + Boolean checkAvailableLot()
   }
@@ -56,18 +56,18 @@ package finder {
     ParkingBoy[] parkingBoys
   }
 
-  ParkingBoy "1" o--> "1" IParkingBoyRule
+  ParkingBoy "1" o--> "1" ParkingBoyRule
   ParkingManager "1" o--> "0..many" ParkingBoy
-  ParkingManager -|> IParkingLotFinder
-  ParkingBoy -|> IParkingLotFinder
+  ParkingManager -|> ParkingLotFinder
+  ParkingBoy -|> ParkingLotFinder
 }
 
 package rule {
   class OrderParkingBoyRule << strategy >>
   class MostAvailableParkingBoyRule << strategy >>
 
-  OrderParkingBoyRule --|> IParkingBoyRule
-  MostAvailableParkingBoyRule -up-|> IParkingBoyRule
+  OrderParkingBoyRule --|> ParkingBoyRule
+  MostAvailableParkingBoyRule -up-|> ParkingBoyRule
 }
 @enduml
 
@@ -87,5 +87,19 @@ enum ParkingRules {
   MOST_AVAILABLE
 }
 
+class ParkingBoyService << service >> {
+  Map<ParkingBoy, ParkingLot[]> findParkingBoys()
+}
+
+interface ParkingBoyRepository << repository >> {
+  ParkingBoy[] findParkingBoys()
+}
+
+interface ParkingLotRepository << repository >> {
+  ParkingLot[] findParkingLotsByIds(ParkingLotId[])
+}
+
 ParkingBoy "1" o--> "1" ParkingRules
+ParkingBoyService "1" o--> "1" ParkingBoyRepository
+ParkingBoyService "1" o--> "1" ParkingLotRepository
 @enduml

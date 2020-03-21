@@ -2,22 +2,17 @@
 
 import {Car} from './car'
 import {Ticket} from './ticket'
-import {ValueObject} from '../valueObject'
-import {v4 as uuid} from 'uuid'
+import {ValueObject} from '../../valueObject'
 
 export class ParkingLot {
-    private readonly _id: ParkingLotID
     private _availableSpaces: number
     private parkedCars: Map<Ticket, Car>
+    public readonly id: ParkingLotId
 
-    constructor(totalSpaces: number) {
-        this._id = new ParkingLotID(uuid())
+    constructor(id: string, totalSpaces: number) {
         this._availableSpaces = totalSpaces
         this.parkedCars = new Map<Ticket, Car>()
-    }
-
-    public get id() {
-        return this._id
+        this.id = new ParkingLotId(id)
     }
 
     public get availableSpaces() {
@@ -33,7 +28,7 @@ export class ParkingLot {
             throw new Error('capacity is not enough.')
         }
 
-        const ticket = new Ticket(car.plant, this._id)
+        const ticket = new Ticket(car.plant, this.id)
         this.parkedCars.set(ticket, car)
         this._availableSpaces--
         return ticket
@@ -52,7 +47,7 @@ export class ParkingLot {
     }
 }
 
-export class ParkingLotID extends ValueObject<String> {
+export class ParkingLotId extends ValueObject<String> {
     constructor(parkingLotID: String) {
         super(parkingLotID)
     }
