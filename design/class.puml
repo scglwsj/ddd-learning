@@ -1,4 +1,4 @@
-@startuml Parking context
+@startuml parking context
 package parking << core >> {
   class ParkingLot << Entity >> << Aggregate Root >> {
     << readonly >>
