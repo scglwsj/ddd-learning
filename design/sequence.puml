@@ -1,0 +1,43 @@
+@startuml park
+actor user #LightCoral
+
+box parking context
+    participant parkingApplicationService #LightBlue
+    participant IParkingLotFinderFactory #LightGreen
+    participant ParkingManager #LightGreen
+    participant ParkingLot #LightGreen
+    participant ParkingLotFinderFactory #LightYellow
+end box
+
+box config context
+    participant configApplicationService #LightBlue
+    participant IParkingBoyRepository #LightGreen
+    participant IParkingLotRepository #LightGreen
+    participant ParkingBoyRepository #LightYellow
+    participant ParkingLotRepository #LightYellow
+end box
+
+database db #LightGray
+
+user -> parkingApplicationService: park
+parkingApplicationService -> IParkingLotFinderFactory: newParkingManager
+IParkingLotFinderFactory -> ParkingLotFinderFactory: newParkingManager
+ParkingLotFinderFactory -> configApplicationService: findBoysByIds
+configApplicationService -> IParkingBoyRepository: findBoysByIds
+IParkingBoyRepository -> ParkingBoyRepository: findBoysByIds
+ParkingBoyRepository -> db: findBoysByIds
+db -> ParkingBoyRepository: parkingBoys
+ParkingBoyRepository -> configApplicationService: parkingBoys
+configApplicationService -> IParkingLotRepository: findLotsByIds
+IParkingLotRepository -> ParkingLotRepository: findLotsByIds
+ParkingLotRepository -> db: findLotsByIds
+db -> ParkingLotRepository: parkingLots
+ParkingLotRepository -> configApplicationService: parkingLots
+configApplicationService -> ParkingLotFinderFactory: parkingBoys
+ParkingLotFinderFactory -> ParkingManager: parkingManager
+ParkingManager -> ParkingLot: findOneValidParkingLot
+ParkingLot -> parkingApplicationService: parkingLot
+parkingApplicationService -> ParkingLot: park
+ParkingLot -> parkingApplicationService: ticket
+parkingApplicationService-> user: ticket
+@enduml

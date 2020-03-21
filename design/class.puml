@@ -1,0 +1,91 @@
+@startuml Parking context
+package parking << core >> {
+  class ParkingLot << Entity >> << Aggregate Root >> {
+    << readonly >>
+    + ParkingLotId id
+    << readonly >>
+    + int availableSpaces
+    << readonly >>
+    + Boolean hasAvailableSpaces
+
+    Map <Ticket, Car> parkedCars
+
+    + Ticket park(Car)
+    + Car take(Ticket)
+  }
+
+  class Car << Value Object >> {
+      PlateNumber plateNumber
+  }
+
+  class Ticket << Value Object >> {
+    TicketID id
+    + Boolean validate()
+  }
+
+  interface IParkingLotFinder {
+    ParkingLot? findOneValidParkingLot()
+  }
+
+  interface IParkingLotFinderFactory << Factory >> {
+    IParkingLotFinder newParkingManager()
+    IParkingLotFinder newParkingBoy(ParkingBoyId)
+  }
+
+  Ticket "1" *--> "1" Car
+  ParkingLot "1" o--> "0..many" Ticket
+  IParkingLotFinderFactory ..> IParkingLotFinder
+}
+
+package finder {
+  interface IParkingBoyRule << strategy >> {
+    ParkingLot? findOneValidParkingLot(ParkingLot[])
+  }
+
+  class ParkingBoy << value object >> {
+    << readonly >>
+    + ParkingBoyId id
+
+    ParkingLot[] parkingLots
+    IParkingBoyRule parkingBoyRule
+
+    + Boolean checkAvailableLot()
+  }
+
+  class ParkingManager << value object >> {
+    ParkingBoy[] parkingBoys
+  }
+
+  ParkingBoy "1" o--> "1" IParkingBoyRule
+  ParkingManager "1" o--> "0..many" ParkingBoy
+  ParkingManager -|> IParkingLotFinder
+  ParkingBoy -|> IParkingLotFinder
+}
+
+package rule {
+  class OrderParkingBoyRule << strategy >>
+  class MostAvailableParkingBoyRule << strategy >>
+
+  OrderParkingBoyRule --|> IParkingBoyRule
+  MostAvailableParkingBoyRule -up-|> IParkingBoyRule
+}
+@enduml
+
+@startuml config context
+class ParkingBoy << entity >> << Aggregate Root >> {
+  ParkingLotId[] parkingLots
+  ParkingRules parkingBoyRule
+}
+
+class ParkingLot << entity >> << Aggregate Root >> {
+  ParkingLotId id
+  int totalSpaces
+}
+
+enum ParkingRules {
+  ORDER
+  MOST_AVAILABLE
+}
+
+ParkingBoy "1" o--> "1" ParkingRules
+@enduml
