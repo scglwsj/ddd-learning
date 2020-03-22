@@ -19,7 +19,7 @@ export class ParkingBoyService {
 
         return parkingBoys.map(parkingBoy => [
             parkingBoy,
-            parkingLots.filter(({id}) => parkingBoy.parkingLots.includes(id)),
+            parkingLots.filter(({id}) => parkingBoy.parkingLots.some(parkingLotId => parkingLotId.equals(id))),
         ])
     }
 }

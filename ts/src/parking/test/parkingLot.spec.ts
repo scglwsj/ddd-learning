@@ -1,12 +1,12 @@
 /** @format */
 
-import {ParkingLot, ParkingLotId} from '../domain/parkingLot/parking/parkingLot'
+import {ParkingLot} from '../domain/parkingLot/parking/parkingLot'
 import {Car} from '../domain/parkingLot/parking/car'
 
 describe('parking lot test', () => {
     let parkingLot: ParkingLot
     beforeEach(() => {
-        parkingLot = new ParkingLot(new ParkingLotId('1'), 2)
+        parkingLot = new ParkingLot('1', 2)
     })
 
     it('should return a ticket when given a car', () => {

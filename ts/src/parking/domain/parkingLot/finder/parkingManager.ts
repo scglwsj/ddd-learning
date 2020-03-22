@@ -14,6 +14,6 @@ export class ParkingManager implements ParkingLotFinder {
 
     public findOneValidParkingLot() {
         const parkingBoy = this.findOneValidParkingBoy()
-        return (parkingBoy && parkingBoy.findOneValidParkingLot()) || null
+        return parkingBoy?.findOneValidParkingLot() ?? null
     }
 }

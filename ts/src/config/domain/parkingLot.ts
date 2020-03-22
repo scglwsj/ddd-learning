@@ -3,7 +3,11 @@
 import {ValueObject} from './valueObject'
 
 export class ParkingLot {
-    constructor(public readonly id: ParkingLotId, public readonly totalSpaces: number) {}
+    public readonly id: ParkingLotId
+
+    constructor(id: string, public readonly totalSpaces: number) {
+        this.id = new ParkingLotId(id)
+    }
 }
 
 export class ParkingLotId extends ValueObject<String> {

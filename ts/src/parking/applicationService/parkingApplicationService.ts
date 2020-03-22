@@ -2,7 +2,6 @@
 
 import {ParkingLotFinderFactory} from '../domain/parkingLot/parking/parkingLotFinderFactory'
 import {Car} from '../domain/parkingLot/parking/car'
-import {Ticket} from '../domain/parkingLot/parking/ticket'
 import {ParkingManager} from '../domain/parkingLot/finder/parkingManager'
 
 export class ParkingApplicationService {
@@ -14,6 +13,6 @@ export class ParkingApplicationService {
 
     park(car: Car) {
         const parkingLot = this.parkingManager.findOneValidParkingLot()
-        return (parkingLot && parkingLot.park(car)) || null
+        return parkingLot?.park(car) ?? null
     }
 }

@@ -12,8 +12,8 @@ describe('parking manager tets.', () => {
     let parkingLots: ParkingLot[]
 
     beforeEach(() => {
-        const parkingLot1 = new ParkingLot(new ParkingLotId('1'), 1)
-        const parkingLot2 = new ParkingLot(new ParkingLotId('2'), 1)
+        const parkingLot1 = new ParkingLot('1', 1)
+        const parkingLot2 = new ParkingLot('2', 1)
         parkingLots = [parkingLot1, parkingLot2]
         parkingManager = new ParkingManager([
             new ParkingBoy('1', [parkingLot1], new OderParkingBoyRule()),

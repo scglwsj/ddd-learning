@@ -1,7 +1,7 @@
 /** @format */
 
 import {ParkingBoy} from '../domain/parkingLot/finder/parkingBoy'
-import {ParkingLot, ParkingLotId} from '../domain/parkingLot/parking/parkingLot'
+import {ParkingLot} from '../domain/parkingLot/parking/parkingLot'
 import {OderParkingBoyRule} from '../domain/parkingLot/rule/orderParkingBoyRule'
 import {Car} from '../domain/parkingLot/parking/car'
 import {MostAvailableParkingBoyRule} from '../domain/parkingLot/rule/mostAvailableParkingBoyRule'
@@ -12,8 +12,8 @@ describe('parking boy test', () => {
     let parkingLot2: ParkingLot
 
     beforeEach(() => {
-        parkingLot1 = new ParkingLot(new ParkingLotId('1'), 1)
-        parkingLot2 = new ParkingLot(new ParkingLotId('2'), 2)
+        parkingLot1 = new ParkingLot('1', 1)
+        parkingLot2 = new ParkingLot('2', 2)
         parkingBoy = new ParkingBoy('1', [parkingLot1, parkingLot2], new OderParkingBoyRule())
     })
 
