@@ -8,7 +8,7 @@ import {ValueObject} from '../../valueObject'
 export class Ticket extends ValueObject<TicketID> {
     private valid: Boolean
 
-    public constructor(public readonly carPlante: PlateNumber, public readonly ParkingLot: ParkingLotId) {
+    public constructor(public readonly carPlate: PlateNumber, public readonly ParkingLot: ParkingLotId) {
         super(new TicketID(uuid()))
         this.valid = true
     }
